@@ -14,7 +14,7 @@ if ! command -v gobuster &> /dev/null; then
   install_gobuster
 fi
 
-WORDLIST="/path/to/wordlist.txt"
+WORDLIST="/usr/share/wordlists/dirbuster/directory-list-2.3-small.txt"
 
 INPUT_FILE="scan_results.json"
 
