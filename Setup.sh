@@ -10,6 +10,6 @@ chmod +x setup.sh
 ./setup.sh -t
 
 echo "Unpacking rockyou..."
-gzip -d /usr/share/wordlists/rockyou.txt.gz
+sudo zip -d /usr/share/wordlists/rockyou.txt.gz
 
 echo "Done!"
