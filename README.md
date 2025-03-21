@@ -150,5 +150,3 @@ SHA256
 ```bash
 hashcat -a 0 -w 4 -m 1400 --session hash_session hash.hash /usr/share/wordlists/rockyou.txt
 ```
-
-![grafik.png](.attachments.12925/grafik.png)
