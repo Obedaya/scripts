@@ -150,6 +150,12 @@ SHA256
 ```bash
 hashcat -a 0 -w 4 -m 1400 --session hash_session hash.hash /usr/share/wordlists/rockyou.txt
 ```
+## Netcat
+
+Listening shell:
+```bash
+nc -lvnp 4000
+```
 
 # Privilege Escalation
 
