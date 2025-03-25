@@ -150,3 +150,12 @@ SHA256
 ```bash
 hashcat -a 0 -w 4 -m 1400 --session hash_session hash.hash /usr/share/wordlists/rockyou.txt
 ```
+
+# Privilege Escalation
+
+---
+
+Datei mit SUID bit gesetzt:
+```
+find / -user root -perm -4000 -print 2>/dev/null | head -20
+```
