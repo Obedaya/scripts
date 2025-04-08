@@ -26,13 +26,13 @@ SCAN_RESULTS="scan_results.json"
 
 rm -f $REACHABLE_IPS $SCAN_RESULTS
 
-nmap -sn $IP_RANGE -oG - | awk '/Up$/{print $2}' > $REACHABLE_IPS
+nmap -sn -V $IP_RANGE -oG - | awk '/Up$/{print $2}' > $REACHABLE_IPS
 
 echo "[" >> $SCAN_RESULTS  # Beginne das JSON-Array
 
 while IFS= read -r IP; do
   echo "Scanning $IP..."
-  nmap -Pn -p- --open $IP -oG - | awk '/Ports:/{print "{\"ip\":\"" $2 "\",\"ports\":\"" $5 "\"},"}' >> $SCAN_RESULTS
+  nmap -sS -p- --open -V $IP -oG - | awk '/Ports:/{print "{\"ip\":\"" $2 "\",\"ports\":\"" $5 "\"},"}' >> $SCAN_RESULTS
 done < "$REACHABLE_IPS"
 
 truncate -s-2 $SCAN_RESULTS
