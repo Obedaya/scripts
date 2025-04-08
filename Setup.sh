@@ -17,6 +17,8 @@ if $INSTALL_TERMINATOR; then
 	./setup.sh -t
 fi
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh >> ./Tools/linpeas.sh
+curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe >> ./Tools/winPEAS.exe
+curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./Tools/php-reverse-shell.php
 
 echo "Unpacking rockyou..."
 sudo gzip -d /usr/share/wordlists/rockyou.txt.gz
