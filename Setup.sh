@@ -16,6 +16,7 @@ if $INSTALL_TERMINATOR; then
 	chmod +x setup.sh
 	./setup.sh -t
 fi
+curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh >> ./Tools/linpeas.sh
 
 echo "Unpacking rockyou..."
 sudo gzip -d /usr/share/wordlists/rockyou.txt.gz
