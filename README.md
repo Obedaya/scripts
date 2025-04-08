@@ -5,7 +5,7 @@
 ./Setup.sh
 ```
 
-Options (Mit sch√nem ZSH und anderem Terminal Emulator):
+Options (Mit sch√∂nem ZSH und anderem Terminal Emulator(Terminator)):
 ```bash
 ./Setup.sh -t
 ```
