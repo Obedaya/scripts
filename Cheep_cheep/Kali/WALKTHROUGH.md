@@ -26,10 +26,11 @@ nmap -sS -p- 127.0.0.1 -v
 
 1. Webseite querien
 
-2. Mit Gobuster directories durchgehen (muss davor installiert werden):
+2. Mit Gobuster (oder dirb) directories durchgehen (muss davor installiert werden):
 ```bash
 gobuster dir -u 127.0.0.1 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
 ```
+Achtung: Gobuster ist schnell aber nicht rekursiv -> Man muss manuell gefundene Subdomains nochmal durchsuchen
 
 3. Paar Sachen die man noch checken kann:
 - /robots.txt -> Irgendwelche interessanten subdomains? (Loginseiten, versteckte dev Seiten)
