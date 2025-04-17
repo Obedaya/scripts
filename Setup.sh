@@ -2,6 +2,24 @@
 
 INSTALL_ZSH=false
 
+# Determine the package manager
+if command -v apt &> /dev/null; then
+    PKG_MANAGER="apt"
+    UPDATE_CMD="sudo apt update"
+    INSTALL_CMD="sudo apt install -y"
+elif command -v dnf &> /dev/null; then
+    PKG_MANAGER="dnf"
+    UPDATE_CMD="sudo dnf check-update"
+    INSTALL_CMD="sudo dnf install -y"
+elif command -v pacman &> /dev/null; then
+    PKG_MANAGER="pacman"
+    UPDATE_CMD="sudo pacman -Sy"
+    INSTALL_CMD="sudo pacman -Sy"
+else
+    echo "Unsupported package manager. Exiting."
+    exit 1
+fi
+
 echo "Get required files..."
 while getopts "t" opt; do
     case $opt in
@@ -19,6 +37,12 @@ fi
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh >> ./Tools/linpeas.sh
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe >> ./Tools/winPEAS.exe
 curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./Tools/php-reverse-shell.php
+
+$UPDATE_CMD
+
+echo "Installing tldr..."
+
+$INSTALL_CMD tldr
 
 echo "Unpacking rockyou..."
 sudo gzip -d /usr/share/wordlists/rockyou.txt.gz

@@ -18,7 +18,7 @@ WORDLIST="/usr/share/wordlists/dirbuster/directory-list-2.3-small.txt"
 
 INPUT_FILE="scan_results.json"
 
-DIRBUSTER_RESULTS="dirbuster_results.txt"
+DIRBUSTER_RESULTS="gobuster_results.txt"
 
 rm -f $DIRBUSTER_RESULTS
 
@@ -32,30 +32,11 @@ if [ ! -f "$INPUT_FILE" ]; then
   exit 1
 fi
 
-cleanup() {
-  echo "Abbruch erkannt! Speichern der bisherigen Ergebnisse..."
-  for IP_FILE in dirbuster_*.txt; do
-    [ -e "$IP_FILE" ] || continue  # Falls keine Dateien vorhanden sind
-    IP=$(echo $IP_FILE | sed 's/dirbuster_//; s/.txt//')
-    echo "Zwischenergebnisse für $IP speichern..."
-    echo "Ergebnisse für $IP:" >> $DIRBUSTER_RESULTS
-    cat "$IP_FILE" >> $DIRBUSTER_RESULTS
-    echo "" >> $DIRBUSTER_RESULTS
-  done
-  exit 0
-}
-
-trap cleanup SIGINT SIGTERM
-
-IPS=$(jq -r '.[] | select(.ports | test("80|443")) | .ip' $INPUT_FILE)
+IPS=$(jq -r '.[] | select(.ports | test("80|8080|443")) | .ip' $INPUT_FILE)
 
 for IP in $IPS; do
-  echo "Dirbuster-Scan für $IP..."
-  gobuster dir -u http://$IP -w $WORDLIST -o "dirbuster_${IP}.txt"
-  # Ergebnisse in die Hauptdatei zusammenführen
-  echo "Ergebnisse für $IP:" >> $DIRBUSTER_RESULTS
-  cat "dirbuster_${IP}.txt" >> $DIRBUSTER_RESULTS
-  echo "" >> $DIRBUSTER_RESULTS
+  echo "Gobuster-Scan für $IP..."
+  gobuster dir -u http://$IP -w $WORDLIST | tee -a $DIRBUSTER_RESULTS
 done
 
-echo "Dirbuster-Scans abgeschlossen. Ergebnisse sind in $DIRBUSTER_RESULTS gespeichert."
+echo "Gobuster-Scans abgeschlossen. Ergebnisse sind in $DIRBUSTER_RESULTS gespeichert."
