@@ -34,6 +34,10 @@ if $INSTALL_TERMINATOR; then
 	chmod +x setup.sh
 	./setup.sh -t
 fi
+mkdir Tools
+touch ./Tools/linpeas.sh
+touch ./Tools/winPEAS.exe
+touch ./Tools/php-reverse-shell.php
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh >> ./Tools/linpeas.sh
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe >> ./Tools/winPEAS.exe
 curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./Tools/php-reverse-shell.php
