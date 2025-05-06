@@ -34,6 +34,9 @@ if $INSTALL_TERMINATOR; then
 	chmod +x setup.sh
 	./setup.sh -t
 fi
+
+echo "Getting tools"
+
 mkdir ./Tools
 touch ./Tools/linpeas.sh
 touch ./Tools/winPEAS.exe
