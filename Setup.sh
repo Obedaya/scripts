@@ -34,7 +34,7 @@ if $INSTALL_TERMINATOR; then
 	chmod +x setup.sh
 	./setup.sh -t
 fi
-mkdir Tools
+mkdir ./Tools
 touch ./Tools/linpeas.sh
 touch ./Tools/winPEAS.exe
 touch ./Tools/php-reverse-shell.php
