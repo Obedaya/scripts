@@ -67,11 +67,11 @@ echo "Installing browser extensions"
 echo "-- Hacktools --"
 
 ADDON_URL="https://addons.mozilla.org/firefox/downloads/latest/hacktools/latest.xpi"
-ADDON_ID="f1423c11-a4e2-4709-a0f8-6d6a68c83d08"
+ADDON_ID="{f1423c11-a4e2-4709-a0f8-6d6a68c83d08}"
 
 PROFILE=$(find ~/.mozilla/firefox -maxdepth 1 -type d -name "*.default-release" | head -n 1)
-mkdir -p "$PROFILE/extensions"
-wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
+sudo mkdir -p "$PROFILE/extensions"
+sudo wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
 
 echo "-- Wappalyzer --"
 
@@ -79,7 +79,7 @@ ADDON_URL="https://addons.mozilla.org/firefox/downloads/latest/wappalyzer/latest
 ADDON_ID="wappalyzer@crunchlabz.com"
 
 PROFILE=$(find ~/.mozilla/firefox -maxdepth 1 -type d -name "*.default-release" | head -n 1)
-mkdir -p "$PROFILE/extensions"
-wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
+sudo mkdir -p "$PROFILE/extensions"
+sudo wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
 
 echo "Done!"
