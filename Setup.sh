@@ -33,15 +33,16 @@ if $INSTALL_ZSH; then
 	cd obedssetupscript
 	chmod +x setup.sh
 	./setup.sh -t
+	cd ..
 fi
 
 echo "Getting tools"
 
-cd ..
 mkdir ./Tools
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh >> ./Tools/linpeas.sh
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe >> ./Tools/winPEAS.exe
 curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./Tools/php-reverse-shell.php
+curl -L https://github.com/martinsohn/PowerShell-reverse-shell/blob/main/powershell-reverse-shell.ps1 >> ./Tools/reverse-shell.ps1
 
 $UPDATE_CMD
 
