@@ -20,6 +20,9 @@ else
     exit 1
 fi
 
+# Fix kalis signing-key
+sudo wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
+
 echo "Get required files..."
 while getopts "t" opt; do
     case $opt in
