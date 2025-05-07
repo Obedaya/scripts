@@ -69,7 +69,7 @@ echo "-- Hacktools --"
 sudo mkdir -p /etc/firefox-esr/policies
 
 # Create policies.json with force-installed extensions
-cat <<EOF | sudo tee /etc/firefox/policies/policies.json >/dev/null
+cat <<EOF | sudo tee /etc/firefox-esr/policies/policies.json >/dev/null
 {
   "policies": {
     "ExtensionSettings": {
