@@ -66,27 +66,24 @@ echo "Installing browser extensions"
 
 echo "-- Hacktools --"
 
-ADDON_URL="https://addons.mozilla.org/firefox/downloads/latest/hacktools/latest.xpi"
-ADDON_ID="{f1423c11-a4e2-4709-a0f8-6d6a68c83d08}"
+sudo mkdir -p /etc/firefox/policies
 
-PROFILE=$(find ~/.mozilla/firefox -maxdepth 1 -type d -name "*.default-esr" | head -n 1)
-if [[ -n "$PROFILE" ]]; then
-	sudo mkdir -p "$PROFILE/extensions"
-	sudo wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
-else
-	echo "Could not find Firefox profile!"
-fi
-
-echo "-- Wappalyzer --"
-
-ADDON_URL="https://addons.mozilla.org/firefox/downloads/latest/wappalyzer/latest.xpi"
-ADDON_ID="wappalyzer@crunchlabz.com"
-
-if [[ -n "$PROFILE" ]]; then
-	sudo wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
-	sudo chown -R kali:kali "$PROFILE/extensions"
-else
-	echo "Could not find Firefox profile!"
-fi
+# Create policies.json with force-installed extensions
+cat <<EOF | sudo tee /etc/firefox/policies/policies.json >/dev/null
+{
+  "policies": {
+    "ExtensionSettings": {
+      "wappalyzer@crunchlabz.com": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/wappalyzer/latest.xpi"
+      },
+      "{f1423c11-a4e2-4709-a0f8-6d6a68c83d08}": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/hacktools/latest.xpi"
+      }
+    }
+  }
+}
+EOF
 
 echo "Done!"
