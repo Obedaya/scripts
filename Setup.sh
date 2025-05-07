@@ -84,6 +84,7 @@ ADDON_ID="wappalyzer@crunchlabz.com"
 
 if [[ -n "$PROFILE" ]]; then
 	sudo wget -O "$PROFILE/extensions/$ADDON_ID.xpi" "$ADDON_URL"
+	sudo chown -R kali:kali "$PROFILE/extensions"
 else
 	echo "Could not find Firefox profile!"
 fi
