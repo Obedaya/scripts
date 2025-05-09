@@ -44,8 +44,24 @@ echo "Getting tools"
 mkdir ./Tools
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh >> ./Tools/linpeas.sh
 curl -L https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe >> ./Tools/winPEAS.exe
-curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./Tools/php-reverse-shell.php
-curl -L https://raw.githubusercontent.com/martinsohn/PowerShell-reverse-shell/refs/heads/main/powershell-reverse-shell.ps1 >> ./Tools/reverse-shell.ps1
+curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./Tools/revshell.php
+curl -L https://raw.githubusercontent.com/martinsohn/PowerShell-reverse-shell/refs/heads/main/powershell-reverse-shell.ps1 >> ./Tools/revshell.ps1
+
+# Change IP of revshells
+# PHP Revshell
+
+IP=$(ip addr show eth1 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+
+SCRIPT="./Tools/revshell.php"
+
+sed -i "s/\(\$ip = '\)[^']*\(';\)/\1$IP\2/" "$SCRIPT"
+sed -i "s/\(\$port = \)[0-9]*\(;.*\)/\15555\2/" "$SCRIPT"
+
+# Powershell Revshell
+
+SCRIPT="./Tools/revshell.ps1"
+
+sed -i "s/\(TCPClient('\)[^']*\(', \)[0-9]\+\()/\1$IP\2 5555)/" "$SCRIPT"
 
 $UPDATE_CMD
 
@@ -66,8 +82,6 @@ if ! grep -q "setxkbmap de" ~/.zshrc; then
 fi
 
 echo "Installing browser extensions"
-
-echo "-- Hacktools --"
 
 sudo mkdir -p /etc/firefox-esr/policies
 
