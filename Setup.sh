@@ -61,7 +61,7 @@ sed -i "s/\(\$port = \)[0-9]*\(;.*\)/\15555\2/" "$SCRIPT"
 
 SCRIPT="./Tools/revshell.ps1"
 
-sed -i "s/\(TCPClient('\)[^']*\(', \)[0-9]\+\()/\1$IP\2 5555)/" "$SCRIPT"
+sed -i "s|TCPClient('.*', [0-9]\+)|TCPClient('$IP', 6666)|" "$SCRIPT"
 
 $UPDATE_CMD
 
