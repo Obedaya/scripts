@@ -9,10 +9,10 @@
     - Powershell Revshell (port 6666)
 - Entpackt rockyou
 - Setzt deutsches Keyboard Layout
-- Installiert Browser extensions fÃr Firefox (sofern Firefox auf Kali Maschine funktioniert)
+- Installiert Browser extensions fÃ¼r Firefox (sofern Firefox auf Kali Maschine funktioniert)
 - Inkludiert sind auÃŸerdem 2 Skripte zum nmap und gobuster scannen (Sind grad brokey)
 
-Optional (-t: Execute at own risk -> KÃnnte bei Fehlern zu sh shell fÃhren xD):
+Optional (-t: Execute at own risk -> KÃƒnnte bei Fehlern zu sh shell fÃƒhren xD):
 - Installiert Terminator
 - Installiert Ohmyzsh mit Powerlevel10k
 - Installiert Hacknerdfont
@@ -22,7 +22,7 @@ Optional (-t: Execute at own risk -> KÃnnte bei Fehlern zu sh shell fÃhren xD):
 ./Setup.sh
 ```
 
-Options (Mit schÃ¶nem ZSH und anderem Terminal Emulator(Terminator)):
+Options (Mit schÃƒÂ¶nem ZSH und anderem Terminal Emulator(Terminator)):
 ```bash
 ./Setup.sh -t
 ```
