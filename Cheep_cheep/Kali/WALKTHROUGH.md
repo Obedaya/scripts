@@ -21,6 +21,11 @@ Alternative:
 nmap -sS -p- 127.0.0.1 -v
 ```
 
+3. IPs nach vulnerabilities scannen
+
+```bash
+nmap --script vuln 127.0.0.1 -v
+```
 
 ### Webserver
 
@@ -39,7 +44,7 @@ Achtung: Gobuster ist schnell aber nicht rekursiv -> Man muss manuell gefundene 
 - Webseiten source code -> Gibts dev Kommentare? Hardcoded credentials? Veraltete Versionen?
 - Wenn es ein Wordpress Server ist, kann man wp-scan nutzen:
 ```bash
-wp-scan --url http://127.0.0.1/ --plugins-detection aggressive
+wpscan --url http://127.0.0.1/ --plugins-detection aggressive
 ```
 
 #### XSS, SQLi
@@ -309,3 +314,18 @@ https://gtfobins.github.io/
 Manchmal findet man Informationen zum System oder veraltete Versionen, die man dann einfach mal in GTFO bins nachschauen kann.
 
 Alternativ kann man mal commands ausprobieren, für "SUDO", "SUID", "Limited SUID"
+
+### Scripte
+
+Paar Skripte, die man nutzen kann:
+- LinPeas, WinPeas
+- Privesccheck
+
+=> Machen viele Ding automatisiert und präsentieren das ganze anschaulich
+
+Tipp:
+Linpeas mit tee -a ausführen um in Datei zu schreiben (Damit man Command nicht mehrmals laufen lassen muss):
+
+```bash
+./linpeas.sh | tee -a output.txt 
+```
