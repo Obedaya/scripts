@@ -223,6 +223,20 @@ Paar Flags:
 Großschreibung von -L und -P : Bruteforcen mit einer Wörterliste
 Kleinschreibung von -l und -p : Konkreter Wert
 
+### WP Scan
+WP scan kann nicht nur zum scannen benutzt werden sondern auch zum Bruteforcen:
+
+```bash
+wpscan --url http://127.0.0.1/ --passwords /usr/share/wordlists/rockyou.txt
+```
+(Probiert admin, editor und author)
+
+Wenn man einen User hat:
+```bash
+wpscan --url http://127.0.0.1/ --username bruno --passwords /usr/share/wordlists/rockyou.txt
+```
+
+(--usernames -> Wörterliste mit Usern)
 ### Crunch
 
 Generiert Bruteforce Wordlists:
