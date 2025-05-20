@@ -104,4 +104,7 @@ cat <<EOF | sudo tee /etc/firefox-esr/policies/policies.json >/dev/null
 }
 EOF
 
+echo "Updating nmap scripts"
+sudo nmap --script-updatedb
+
 echo "Done!"
