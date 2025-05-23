@@ -1,3 +1,11 @@
+# Cheatsheets and Links:
+
+- https://gabb4r.gitbook.io/oscp-notes (General Cheatsheet organized by ports; Windows & Linux)
+- https://www.noobsec.net/oscp-cheatsheet/ (General Cheatsheet organized by ports; Windows & Linux)
+- https://gtfobins.github.io/ (Privesc)
+- https://hacktools.sh/ (Revshells and Linux commands; Browserextension)
+- https://www.revshells.com/ (More Revshells)
+- https://osintframework.com/ (OSINT)
 # Information Gathering
 
 ---
