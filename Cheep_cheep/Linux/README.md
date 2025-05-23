@@ -41,6 +41,18 @@ tail -n 3
 find / -user root -perm -4000 -print 2>/dev/null | head -20
 ```
 
+### Movement:
+```bash
+# Save temp a folder location
+pushd
+
+# Move around
+cd .. (And so on)
+
+# When you want to go back
+popd
+```
+
 ### System information:
 
 ```bash

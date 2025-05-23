@@ -1,5 +1,5 @@
 > [!info]
-> Hacktools: https://github.com/LasCC/HackTools/tree/master
+> Hacktools: https://hacktools.sh/
 > Wappalyzer: https://www.wappalyzer.com/
 
 ## Initial Access
