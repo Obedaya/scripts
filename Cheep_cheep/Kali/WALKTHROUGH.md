@@ -207,6 +207,10 @@ python3 -c 'import pty;pty.spawn("/bin/bash")'
 ```
 
 ```bash
+export TERM=xterm
+```
+
+```bash
 Ctrl + Z
 ```
 
