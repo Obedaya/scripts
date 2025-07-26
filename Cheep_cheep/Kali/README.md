@@ -306,3 +306,5 @@ getsystem # Priv escalation
 hashdump # Hashes von Windows extrahieren
 ```
 
+https://nextcloud.th-deg.de/s/SQDEmHeXEX2HPoD
+
