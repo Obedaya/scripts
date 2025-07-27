@@ -6,8 +6,8 @@ usage() {
   exit 1
 }
 
-# Prüfen, ob exakt 2 Argumente übergeben wurden
-if [ "$#" -ne 2 ]; then
+# Prüfen, ob exakt1 Argumente übergeben wurden
+if [ "$#" -ne 1 ]; then
   usage
 fi
 
