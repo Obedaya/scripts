@@ -70,6 +70,8 @@ echo "Installing tldr..."
 
 $INSTALL_CMD tealdeer
 
+tldr --update
+
 echo "Unpacking rockyou..."
 sudo gzip -d /usr/share/wordlists/rockyou.txt.gz
 
