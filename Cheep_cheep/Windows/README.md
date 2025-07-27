@@ -347,11 +347,11 @@ impacket-smbserver -smb2support kali .
 ```
 
 ```powershell
-copy-item file \\127.0.0.1\kali -Recurse
+copy-item file.txt \\127.0.0.1\kali -Recurse
 ```
 
 bzw.
 ```powershell
-copy-item \\127.0.0.1\kali file
+copy-item \\127.0.0.1\kali\file.txt file.txt
 ```
 
