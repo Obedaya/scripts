@@ -338,4 +338,16 @@ Oder:
 xfreerdp3 /v:192.168.0.1 /u:benutzer /pth:NTLM_HASH
 ```
 
+## SMB
+Listet alle SMB-shares die erreichbar sind
+```bash
+smbclient -L \\192.168.0.1 -N
+```
+
+Mit smbshare ohne Passwort verbinden
+```bash
+smbclient -N //192.168.0.1/share
+```
+
+
 https://nextcloud.th-deg.de/s/SQDEmHeXEX2HPoD
