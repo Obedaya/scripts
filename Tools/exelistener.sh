@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # IP und Port als Variablen setzen
-LHOST="$(ip addr show eth1 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)"
+LHOST="$(hostname -I | awk '{print $1}')"
 LPORT="7777"
 
 msfconsole -q -x "
