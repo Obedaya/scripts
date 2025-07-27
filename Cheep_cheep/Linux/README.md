@@ -79,6 +79,8 @@ id
 ```bash
 # See open ports
 netstat -alnu
+
+netstat -tulpen
 ```
 
 Add Gateway (if subnet is not reachable). The host 192.168.1.2 can reach 192.168.1.1 (The proxied Webserver) but not 192.168.2.0/24 and therefore not 192.168.2.2 (The machine):

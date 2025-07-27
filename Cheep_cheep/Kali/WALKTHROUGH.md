@@ -16,6 +16,11 @@ nmap -sn 127.0.0.1/24 -v
 sudo nmap -A -p- 127.0.0.1
 ```
 
+Oder schlauer Command (props an Rh17S15):
+```bash
+nmap -sCV -A -p $(nmap 127.0.0.1 -p- | grep open | awk -F '/' '{print $1}' | tr '\n' ',' | sed 's/.$//') 127.0.0.1
+```
+
 Alternative:
 ```bash
 nmap -sS -p- 127.0.0.1 -v
